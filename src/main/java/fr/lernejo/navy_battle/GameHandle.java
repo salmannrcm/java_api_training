@@ -5,16 +5,15 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.util.Map;
 
 public class GameHandle implements HttpHandler
 {
-    private final Map<String, String> gameInfo;
+    private final Map<String, String> gameSetting;
 
     public GameHandle(Map<String, String> gameInfo) {
-        this.gameInfo = gameInfo;
+        this.gameSetting = gameInfo;
     }
 
     @Override
@@ -27,18 +26,18 @@ public class GameHandle implements HttpHandler
                 objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
                 Query requestReceive = objectMapper.readValue(response, Query.class);
                 String messageRequest = requestReceive.getMessage();
-                gameInfo.put("client_id", requestReceive.getId());
-                gameInfo.put("client_url", requestReceive.getUrl());
+                gameSetting.put("client_id", requestReceive.getId());
+                gameSetting.put("client_url", requestReceive.getUrl());
 
                 System.out.println(messageRequest);
-                System.out.println(gameInfo.get("id"));
-                System.out.println(gameInfo.get("port"));
-                System.out.println(gameInfo.get("client_id"));
-                System.out.println(gameInfo.get("client_url"));
+                System.out.println(gameSetting.get("id"));
+                System.out.println(gameSetting.get("port"));
+                System.out.println(gameSetting.get("client_id"));
+                System.out.println(gameSetting.get("client_url"));
             }catch (IOException e) {
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
             }
-            Query requestSend = new Query(gameInfo.get("id"), "http://localhost:" + gameInfo.get("port"), "May the best code win");
+            Query requestSend = new Query(gameSetting.get("id"), "http://localhost:" + gameSetting.get("port"), "May the best code win");
             String messageSend = objectMapper.writeValueAsString(requestSend);
 
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_ACCEPTED, messageSend.getBytes().length);
