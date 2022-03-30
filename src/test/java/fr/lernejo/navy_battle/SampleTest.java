@@ -52,15 +52,6 @@ class SampleTest
         Assertions.assertThat(res).isEqualTo(2);
     }
     @Test
-    void div_of_pos_and_neg()
-    {
-        int a = 4;
-        int b = -2;
-        Sample sample = new Sample();
-        int res = sample.op(Sample.Operation.MULT,a,b);
-        Assertions.assertThat(res).isEqualTo(-2);
-    }
-    @Test
     void POW_of_pos()
     {
         int a = 3;
