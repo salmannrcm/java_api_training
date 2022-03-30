@@ -39,7 +39,7 @@ public final class Query
     {
         return shipLeft;
     }*/
-    
+
     public Query()
     {
         this.message = "";
