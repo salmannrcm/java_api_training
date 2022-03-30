@@ -18,6 +18,8 @@ public class Sample {
     enum Operation {
         ADD((a, b) -> a + b),
         MULT((a, b) -> a * b),
+        DIV((a,b) -> a / b),
+        POW((a, b) -> a * a)
         ;
 
         final BiFunction<Integer, Integer, Integer> func;
